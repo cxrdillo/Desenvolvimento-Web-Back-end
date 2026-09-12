@@ -20,6 +20,7 @@ namespace GestaoFranquias.Api.Controllers
 
         // GET: api/unidades
         [HttpGet]
+        [Authorize(Roles = "Administrador,Gestor,Operador")] // Todo mundo na rede pode consultar as unidades
         public async Task<ActionResult<IEnumerable<UnidadeFranqueada>>> ObterTodas()
         {
             var unidades = await _repository.ObterTodasAsync();
@@ -28,6 +29,7 @@ namespace GestaoFranquias.Api.Controllers
 
         // GET: api/unidades/{id}
         [HttpGet("{id}")]
+        [Authorize(Roles = "Administrador,Gestor,Operador")] // Consulta individual liberada para perfis autenticados
         public async Task<ActionResult<UnidadeFranqueada>> ObterPorId(int id)
         {
             var unidade = await _repository.ObterPorIdAsync(id);
@@ -40,6 +42,7 @@ namespace GestaoFranquias.Api.Controllers
 
         // POST: api/unidades
         [HttpPost]
+        [Authorize(Roles = "Administrador")] // Apenas o Administrador da Franqueadora pode cadastrar novas unidades
         public async Task<ActionResult> Cadastrar(UnidadeFranqueadaDto dto)
         {
             // Regra de Negócio obrigatória: Impede cadastrar duas unidades com o mesmo CNPJ
