@@ -20,9 +20,11 @@ namespace GestaoFranquias.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administrador,Gestor,Operador")] // Todo mundo na rede pode listar/consultar os chamados
         public async Task<ActionResult> ObterTodos() => Ok(await _context.ChamadosSuporte.ToListAsync());
 
         [HttpPost]
+        [Authorize(Roles = "Administrador,Gestor,Operador")] // Unidades e gestores/operadores podem abrir chamados com a franqueadora
         public async Task<ActionResult> AbrirChamado(ChamadoSuporte chamado)
         {
             // Regra de negócio: define data automática e status inicial ao abrir o chamado

@@ -18,6 +18,7 @@ namespace GestaoFranquias.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrador,Gestor,Operador")] // Operadores, gestores e administradores podem registrar vendas no caixa
         public async Task<ActionResult> RegistrarVenda(NovaVendaDto dto)
         {
             try

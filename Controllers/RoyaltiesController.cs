@@ -18,6 +18,7 @@ namespace GestaoFranquias.Api.Controllers
 
         // POST: api/royalties/calcular
         [HttpPost("calcular")]
+        [Authorize(Roles = "Administrador")] // Apenas o Administrador da Franqueadora processa e fecha o cálculo oficial de royalties
         public async Task<ActionResult> CalcularRoyalty(int unidadeId, int mes, int ano)
         {
             try
@@ -35,6 +36,7 @@ namespace GestaoFranquias.Api.Controllers
 
         // GET: api/royalties/unidade/{unidadeId}
         [HttpGet("unidade/{unidadeId}")]
+        [Authorize(Roles = "Administrador,Gestor")] // Franqueadora e o Gestor da unidade acompanham os extratos e repasses financeiros
         public async Task<ActionResult> ObterPorUnidade(int unidadeId)
         {
             // Consulta os registros de royalties e faturamento gerados para a unidade

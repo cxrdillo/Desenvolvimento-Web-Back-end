@@ -1,9 +1,11 @@
 using GestaoFranquias.Api.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GestaoFranquias.Api.Controllers
 {
+    [Authorize] // Protege todas as rotas exigindo autenticação JWT
     [ApiController]
     [Route("api/[controller]")]
     public class EstoquesController : ControllerBase
@@ -17,6 +19,7 @@ namespace GestaoFranquias.Api.Controllers
 
         // POST: api/estoques/movimentar
         [HttpPost("movimentar")]
+        [Authorize(Roles = "Administrador,Gestor")] // Apenas administradores e gestores da unidade movimentam o estoque manualmente
         public async Task<ActionResult> MovimentarEstoque(int unidadeId, int produtoId, int quantidade)
         {
             try
@@ -34,6 +37,7 @@ namespace GestaoFranquias.Api.Controllers
         
         // GET: api/estoques/baixo/{unidadeId}
         [HttpGet("baixo/{unidadeId}")]
+        [Authorize(Roles = "Administrador,Gestor")] // Gestores e franqueadora acompanham alertas de estoque baixo
         public async Task<ActionResult> ObterEstoqueBaixo(int unidadeId)
         {
             var estoqueBaixo = await _repository.ObterEstoqueBaixoAsync(unidadeId);
@@ -42,6 +46,7 @@ namespace GestaoFranquias.Api.Controllers
 
         // GET: api/Estoques/{unidadeId}
         [HttpGet("{unidadeId}")]
+        [Authorize(Roles = "Administrador,Gestor,Operador")] // Toda a equipe da unidade ou franqueadora pode consultar o saldo atual
         public async Task<ActionResult> ConsultarEstoqueUnidade(int unidadeId, [FromServices] GestaoFranquias.Api.Data.AppDbContext context)
         {
             // Consulta o saldo atual do estoque da unidade no banco

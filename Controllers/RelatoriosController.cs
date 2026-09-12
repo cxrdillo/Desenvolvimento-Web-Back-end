@@ -1,9 +1,11 @@
 using GestaoFranquias.Api.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestaoFranquias.Api.Controllers
 {
+    [Authorize] // Exige autenticação via JWT para acessar os indicadores gerenciais
     [ApiController]
     [Route("api/[controller]")]
     public class RelatoriosController : ControllerBase
@@ -17,6 +19,7 @@ namespace GestaoFranquias.Api.Controllers
 
         // GET: api/relatorios/faturamento-unidade/{unidadeId}
         [HttpGet("faturamento-unidade/{unidadeId}")]
+        [Authorize(Roles = "Administrador,Gestor")] // Apenas administradores e gestores visualizam relatórios de faturamento
         public async Task<ActionResult> FaturamentoPorUnidade(int unidadeId)
         {
             // Busca todas as vendas da unidade e calcula o faturamento total usando LINQ
@@ -37,6 +40,7 @@ namespace GestaoFranquias.Api.Controllers
 
         // GET: api/relatorios/estoque-critico/{unidadeId}
         [HttpGet("estoque-critico/{unidadeId}")]
+        [Authorize(Roles = "Administrador,Gestor")] // Relatório gerencial restrito à gestão e franqueadora
         public async Task<ActionResult> EstoqueCritico(int unidadeId)
         {
             // Filtra produtos cuja quantidade atual está abaixo ou igual ao estoque mínimo
