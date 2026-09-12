@@ -73,3 +73,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwiZ
 ### (Mostra o cálculo financeiro após a venda)
 GET http://localhost:5121/api/Royalties/unidade/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwiZW1haWwiOiJhbGV4c2FuZHJvQGZyYW5xdWlhLmNvbSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTc4OTI0MzQ4NiwiZXhwIjoxNzg5MjcyMjg2LCJpYXQiOjE3ODkyNDM0ODYsImlzcyI6Ikdlc3Rhb0ZyYW5xdWlhc0FwaSIsImF1ZCI6Ikdlc3Rhb0ZyYW5xdWlhc0NsaWVudCJ9.UZvB-ruX-bg15zrqKJphcfkSNKBfp6fPaISIU6QxrXQ
+
+### CADASTRADO DE USUÁRIO
+POST http://localhost:5121/api/auth/registrar
+Content-Type: application/json
+
+{
+  "nome": "zezinho",
+  "email": "teste3@hotmail.com",
+  "senha": "123456",
+  "papel": "Gestor"
+}
