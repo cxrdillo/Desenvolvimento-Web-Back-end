@@ -316,3 +316,4 @@ D:\Projetos\GestaoFranquias.Api\obj\Debug\net10.0\refint\GestaoFranquias.Api.dll
 D:\Projetos\GestaoFranquias.Api\obj\Debug\net10.0\GestaoFranquias.Api.pdb
 D:\Projetos\GestaoFranquias.Api\obj\Debug\net10.0\GestaoFranquias.Api.genruntimeconfig.cache
 D:\Projetos\GestaoFranquias.Api\obj\Debug\net10.0\ref\GestaoFranquias.Api.dll
+D:\Projetos\GestaoFranquias.Api\obj\Debug\net10.0\GestaoFranquias.Api.sourcelink.json
