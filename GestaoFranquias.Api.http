@@ -1,0 +1,75 @@
+
+### AUTENTICAÇÃO E GERAÇÃO DE TOKEN
+POST http://localhost:5121/api/Auth/login
+Content-Type: application/json
+
+{
+  "email": "alexsandro@franquia.com",
+  "senha": "123456"
+}
+
+### CADASTRO DE UNIDADE
+POST http://localhost:5121/api/Unidades
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwiZW1haWwiOiJhbGV4c2FuZHJvQGZyYW5xdWlhLmNvbSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTc4OTI0MzQ4NiwiZXhwIjoxNzg5MjcyMjg2LCJpYXQiOjE3ODkyNDM0ODYsImlzcyI6Ikdlc3Rhb0ZyYW5xdWlhc0FwaSIsImF1ZCI6Ikdlc3Rhb0ZyYW5xdWlhc0NsaWVudCJ9.UZvB-ruX-bg15zrqKJphcfkSNKBfp6fPaISIU6QxrXQ
+
+{
+  "nome": "Franquia Bairro João de Deus",
+  "cnpj": "1234567800018",
+  "cidade": "Petrolina",
+  "responsavel": "Alexsandro",
+  "ativo": true
+}
+
+### CADASTRO DE PRODUTO
+POST http://localhost:5121/api/Produtos
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwiZW1haWwiOiJhbGV4c2FuZHJvQGZyYW5xdWlhLmNvbSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTc4OTI0MzQ4NiwiZXhwIjoxNzg5MjcyMjg2LCJpYXQiOjE3ODkyNDM0ODYsImlzcyI6Ikdlc3Rhb0ZyYW5xdWlhc0FwaSIsImF1ZCI6Ikdlc3Rhb0ZyYW5xdWlhc0NsaWVudCJ9.UZvB-ruX-bg15zrqKJphcfkSNKBfp6fPaISIU6QxrXQ
+
+{
+  "Nome": "Cadeira Gamer",
+  "Categoria": "Moveis",
+  "Descricao": "Cadeira de escritório ergonômica",
+  "PrecoBase": 500.00,
+  "Ativo": true
+}
+
+### TRATAMENTO DE ERRO / VALIDAÇÃO
+### (Mandando venda vazia para forçar o erro 400 da regra de negócio)
+POST http://localhost:5121/api/Vendas
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwiZW1haWwiOiJhbGV4c2FuZHJvQGZyYW5xdWlhLmNvbSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTc4OTI0MzQ4NiwiZXhwIjoxNzg5MjcyMjg2LCJpYXQiOjE3ODkyNDM0ODYsImlzcyI6Ikdlc3Rhb0ZyYW5xdWlhc0FwaSIsImF1ZCI6Ikdlc3Rhb0ZyYW5xdWlhc0NsaWVudCJ9.UZvB-ruX-bg15zrqKJphcfkSNKBfp6fPaISIU6QxrXQ
+
+{
+  "unidadeFranqueadaId": 1,
+  "itens": []
+}
+
+### ENTRADA DE ESTOQUE (Abastecer a loja)
+POST http://localhost:5121/api/Estoques/movimentar?unidadeId=2&produtoId=2&quantidade=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwiZW1haWwiOiJhbGV4c2FuZHJvQGZyYW5xdWlhLmNvbSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTc4OTI0MzQ4NiwiZXhwIjoxNzg5MjcyMjg2LCJpYXQiOjE3ODkyNDM0ODYsImlzcyI6Ikdlc3Rhb0ZyYW5xdWlhc0FwaSIsImF1ZCI6Ikdlc3Rhb0ZyYW5xdWlhc0NsaWVudCJ9.UZvB-ruX-bg15zrqKJphcfkSNKBfp6fPaISIU6QxrXQ
+
+### REGISTRO DE VENDA COM SUCESSO
+POST http://localhost:5121/api/Vendas
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwiZW1haWwiOiJhbGV4c2FuZHJvQGZyYW5xdWlhLmNvbSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTc4OTI0MzQ4NiwiZXhwIjoxNzg5MjcyMjg2LCJpYXQiOjE3ODkyNDM0ODYsImlzcyI6Ikdlc3Rhb0ZyYW5xdWlhc0FwaSIsImF1ZCI6Ikdlc3Rhb0ZyYW5xdWlhc0NsaWVudCJ9.UZvB-ruX-bg15zrqKJphcfkSNKBfp6fPaISIU6QxrXQ
+
+{
+  "unidadeFranqueadaId": 2,
+  "itens": [
+    {
+      "produtoServicoId": 2,
+      "quantidade": 2
+    }
+  ]
+}
+
+### EVIDÊNCIA DE BAIXA DE ESTOQUE
+### (Mostra que o sistema descontou as 2 cadeiras vendidas)
+GET http://localhost:5121/api/Estoques/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwiZW1haWwiOiJhbGV4c2FuZHJvQGZyYW5xdWlhLmNvbSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTc4OTI0MzQ4NiwiZXhwIjoxNzg5MjcyMjg2LCJpYXQiOjE3ODkyNDM0ODYsImlzcyI6Ikdlc3Rhb0ZyYW5xdWlhc0FwaSIsImF1ZCI6Ikdlc3Rhb0ZyYW5xdWlhc0NsaWVudCJ9.UZvB-ruX-bg15zrqKJphcfkSNKBfp6fPaISIU6QxrXQ
+
+### CONSULTA DE FATURAMENTO E ROYALTIES
+### (Mostra o cálculo financeiro após a venda)
+GET http://localhost:5121/api/Royalties/unidade/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwiZW1haWwiOiJhbGV4c2FuZHJvQGZyYW5xdWlhLmNvbSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTc4OTI0MzQ4NiwiZXhwIjoxNzg5MjcyMjg2LCJpYXQiOjE3ODkyNDM0ODYsImlzcyI6Ikdlc3Rhb0ZyYW5xdWlhc0FwaSIsImF1ZCI6Ikdlc3Rhb0ZyYW5xdWlhc0NsaWVudCJ9.UZvB-ruX-bg15zrqKJphcfkSNKBfp6fPaISIU6QxrXQ
